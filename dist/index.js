@@ -5036,7 +5036,7 @@ var readContractAction = {
     const privateKey = runtime.getSetting("GENLAYER_PRIVATE_KEY");
     return typeof privateKey === "string" && privateKey.startsWith("0x");
   },
-  handler: async (runtime, message, state, _options, callback) => {
+  handler: async (runtime, message, _state, _options, callback) => {
     const clientProvider2 = new ClientProvider(runtime);
     const options = await getParamsWithLLM(
       runtime,
@@ -5107,7 +5107,7 @@ var writeContractAction = {
     const privateKey = runtime.getSetting("GENLAYER_PRIVATE_KEY");
     return typeof privateKey === "string" && privateKey.startsWith("0x");
   },
-  handler: async (runtime, message, state, _options, callback) => {
+  handler: async (runtime, message, _state, _options, callback) => {
     elizaLogger.info("Starting write contract action");
     elizaLogger.debug("User message:", message.content.text);
     const clientProvider2 = new ClientProvider(runtime);
