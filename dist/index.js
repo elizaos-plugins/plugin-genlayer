@@ -2339,6 +2339,7 @@ function weierstrass(curveDef) {
   }
   Point2.BASE._setWindowSize(8);
   function verify(signature, msgHash, publicKey, opts = defaultVerOpts) {
+    var _a;
     const sg = signature;
     msgHash = ensureBytes("msgHash", msgHash);
     publicKey = ensureBytes("publicKey", publicKey);
@@ -2383,7 +2384,7 @@ function weierstrass(curveDef) {
     const is = invN(s);
     const u1 = modN(h * is);
     const u2 = modN(r * is);
-    const R = Point2.BASE.multiplyAndAddUnsafe(P, u1, u2)?.toAffine();
+    const R = (_a = Point2.BASE.multiplyAndAddUnsafe(P, u1, u2)) == null ? void 0 : _a.toAffine();
     if (!R)
       return false;
     const v = modN(R.x);
@@ -2504,10 +2505,12 @@ var errorConfig = {
 };
 var BaseError = class _BaseError extends Error {
   constructor(shortMessage, args = {}) {
+    var _a;
     const details = (() => {
+      var _a2;
       if (args.cause instanceof _BaseError)
         return args.cause.details;
-      if (args.cause?.message)
+      if ((_a2 = args.cause) == null ? void 0 : _a2.message)
         return args.cause.message;
       return args.details;
     })();
@@ -2516,7 +2519,7 @@ var BaseError = class _BaseError extends Error {
         return args.cause.docsPath || args.docsPath;
       return args.docsPath;
     })();
-    const docsUrl = errorConfig.getDocsUrl?.({ ...args, docsPath });
+    const docsUrl = (_a = errorConfig.getDocsUrl) == null ? void 0 : _a.call(errorConfig, { ...args, docsPath });
     const message = [
       shortMessage || "An error occurred.",
       "",
@@ -2574,7 +2577,7 @@ var BaseError = class _BaseError extends Error {
   }
 };
 function walk(err, fn) {
-  if (fn?.(err))
+  if (fn == null ? void 0 : fn(err))
     return err;
   if (err && typeof err === "object" && "cause" in err && err.cause !== void 0)
     return walk(err.cause, fn);
@@ -3892,7 +3895,8 @@ var InvalidChainIdError = class extends BaseError {
 // ../../node_modules/viem/_esm/errors/node.js
 var ExecutionRevertedError = class extends BaseError {
   constructor({ cause, message } = {}) {
-    const reason = message?.replace("execution reverted: ", "")?.replace("execution reverted", "");
+    var _a;
+    const reason = (_a = message == null ? void 0 : message.replace("execution reverted: ", "")) == null ? void 0 : _a.replace("execution reverted", "");
     super(`Execution reverted ${reason ? `with reason: ${reason}` : "for an unknown reason"}.`, {
       cause,
       name: "ExecutionRevertedError"
@@ -4769,17 +4773,17 @@ function validateTypedData(parameters) {
 }
 function getTypesForEIP712Domain({ domain }) {
   return [
-    typeof domain?.name === "string" && { name: "name", type: "string" },
-    domain?.version && { name: "version", type: "string" },
-    typeof domain?.chainId === "number" && {
+    typeof (domain == null ? void 0 : domain.name) === "string" && { name: "name", type: "string" },
+    (domain == null ? void 0 : domain.version) && { name: "version", type: "string" },
+    typeof (domain == null ? void 0 : domain.chainId) === "number" && {
       name: "chainId",
       type: "uint256"
     },
-    domain?.verifyingContract && {
+    (domain == null ? void 0 : domain.verifyingContract) && {
       name: "verifyingContract",
       type: "address"
     },
-    domain?.salt && { name: "salt", type: "bytes32" }
+    (domain == null ? void 0 : domain.salt) && { name: "salt", type: "bytes32" }
   ].filter(Boolean);
 }
 function validateReference(type) {
@@ -4860,7 +4864,7 @@ function encodeType({ primaryType, types }) {
 }
 function findTypeDependencies({ primaryType: primaryType_, types }, results = /* @__PURE__ */ new Set()) {
   const match = primaryType_.match(/^\w*/u);
-  const primaryType = match?.[0];
+  const primaryType = match == null ? void 0 : match[0];
   if (results.has(primaryType) || types[primaryType] === void 0) {
     return results;
   }
